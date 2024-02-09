@@ -1,0 +1,14 @@
+.btn-upload {
+  background-color: lightgrey;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 100px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-upload:hover {
+  background-color: darkgrey;
+}
