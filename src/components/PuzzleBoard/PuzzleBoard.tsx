@@ -1,5 +1,15 @@
 import { useRef, useEffect, MouseEvent } from "react";
+import img11 from '../../assets/images/11.jpg';
+import img12 from '../../assets/images/12.jpg';
+import img13 from '../../assets/images/13.jpg';
+import img21 from '../../assets/images/21.jpg';
+import img22 from '../../assets/images/22.jpg';
+import img23 from '../../assets/images/23.jpg';
+import img31 from '../../assets/images/31.jpg';
+import img32 from '../../assets/images/32.jpg';
+import img33 from '../../assets/images/33.jpg';
 import "./PuzzleBoard.styles.css";
+import Circle from "../../assets/Circle";
 
 interface Selected {
   index: number;
@@ -9,19 +19,16 @@ interface Selected {
 const PuzzleBoard = () => {
   const selected = useRef<Selected | null>(null);
 
-  const places = [
-    { color: "yellow", position: [300, 100] },
-    { color: "orange", position: [300, 200] },
-    { color: "red", position: [100, 100] },
-    { color: "green", position: [200, 100] },
-    { color: "blue", position: [100, 200] },
-    { color: "purple", position: [200, 200] }
-  ].map((place) => ({ ...place, radius: Math.random() * 100 }));
+  const imagePieces = [img11, img12, img13, img21, img22, img23, img31, img32, img33];
 
-  const pieces = places.map((piece) => ({
-    color: piece.color,
-    position: [Math.random() * 300, Math.random() * 300 + 300],
-    radius: piece.radius
+  const places = imagePieces.map((piece, index) => ({
+    image: piece,
+    position: [128 * (index % 3) + 32, 64 * Math.floor(index / 3) + 16]
+  }));
+
+  const pieces = places.map((piece, index) => ({
+    image: piece.image,
+    position: [Math.random() * 300, Math.random() * 300 + 300]
   }));
 
   const handleMouseDown = (event: MouseEvent<HTMLDivElement>, index: number) => {
@@ -46,7 +53,7 @@ const PuzzleBoard = () => {
   
         (element as HTMLDivElement).style.transform = transform;
         (element as HTMLDivElement).style.transition = transition;
-        (element as HTMLDivElement).style.opacity = "0.5";
+        (element as HTMLDivElement).style.opacity = "1";
         endDrag();
       } else {
         const transform = `translate3d(${positionX}px, ${positionY}px, 0)`;
@@ -80,36 +87,35 @@ const PuzzleBoard = () => {
         <div
           key={index}
           style={{
-            backgroundColor: piece.color,
-            borderRadius: piece.radius + "%",
+            backgroundSize: 'cover',
             width: "32px",
             height: "32px",
             position: "absolute",
-            transform: `translate3d(${piece.position[0]}px, ${piece.position[1]}px, 0)`
+            transform: `translate3d(${piece.position[0]+16}px, ${piece.position[1]}px, 0)`
           }}
         >
-          {index}
+          <Circle/>
         </div>
       ))}
-
+  
       {pieces.map((piece, index) => (
         <div
           key={index}
           onMouseDown={(event) => handleMouseDown(event, index)}
           style={{
-            backgroundColor: piece.color,
-            borderRadius: piece.radius + "%",
-            width: "64px",
+            backgroundImage: `url(${piece.image})`,
+            backgroundSize: 'cover',
+            width: "128px",
             height: "64px",
             position: "absolute",
+            opacity: 0.5,
             transform: `translate3d(${piece.position[0]}px, ${piece.position[1]}px, 0)`
           }}
-        >
-          {index}
-        </div>
+        />
       ))}
     </div>
   );
+  
 }
 
 export default PuzzleBoard;
