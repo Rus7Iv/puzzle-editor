@@ -1,0 +1,10 @@
+.puzzle-board {
+  font-family: sans-serif;
+  text-align: center;
+  user-select: none;
+}
+  
+/* div {
+  cursor: grabbing;
+} */
+  
