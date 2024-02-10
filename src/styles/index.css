@@ -12,7 +12,16 @@ code {
 }
 
 .content {
+  display: flex;
+  justify-content: center;
   height: 95vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px;
 }
 
 ::-webkit-scrollbar {
