@@ -29,18 +29,19 @@ const PuzzleBoard = () => {
   const handleMouseMove = (event: globalThis.MouseEvent) => {
     if (selected.current) {
       const { element, index } = selected.current;
-      const positionX = event.pageX - (element as HTMLDivElement).offsetWidth / 2 - 16;
-      const positionY = event.pageY - 112;
+      const parentElement = (element as HTMLDivElement).parentElement;
+      const offsetX = parentElement ? parentElement.offsetLeft : 0;
+      const offsetY = parentElement ? parentElement.offsetTop : 0;
+      const positionX = event.pageX - offsetX - (element as HTMLDivElement).offsetWidth / 2;
+      const positionY = event.pageY - offsetY - (element as HTMLDivElement).offsetHeight / 2;
       const targetX = places[index].position[0];
       const targetY = places[index].position[1];
       const differenceX = Math.abs(positionX - targetX);
       const differenceY = Math.abs(positionY - targetY);
   
-      if (differenceX < 16 && differenceY < 16) {
+      if (differenceX < 32 && differenceY < 32) {
         const transition = `transform 100ms linear`;
-        const transform = `translate3d(${targetX - (element as HTMLDivElement).offsetWidth / 4}px, ${
-          targetY - (element as HTMLDivElement).offsetHeight / 4
-        }px, 0)`;
+        const transform = `translate3d(${targetX - (element as HTMLDivElement).offsetWidth / 4}px, ${targetY - (element as HTMLDivElement).offsetHeight / 4}px, 0)`;
   
         (element as HTMLDivElement).style.transform = transform;
         (element as HTMLDivElement).style.transition = transition;
@@ -52,7 +53,7 @@ const PuzzleBoard = () => {
         (element as HTMLDivElement).style.transform = transform;
       }
     }
-  }
+  }  
 
   const handleMouseUp = () => {
     endDrag();
