@@ -1,5 +1,6 @@
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import ImageUploader from "./components/ImageUpload/ImageUpload";
 import PuzzleBoard from "./components/PuzzleBoard/PuzzleBoard";
 
 function App() {
@@ -7,7 +8,10 @@ function App() {
     <>
       <Header />
       <div className="content">
-        <PuzzleBoard />
+        <div className='main'>
+          <ImageUploader />
+          <PuzzleBoard />
+        </div>
       </div>
       <Footer />
     </>

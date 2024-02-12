@@ -1,13 +1,4 @@
 import { useRef, useEffect, MouseEvent } from "react";
-import img11 from '../../assets/images/11.jpg';
-import img12 from '../../assets/images/12.jpg';
-import img13 from '../../assets/images/13.jpg';
-import img21 from '../../assets/images/21.jpg';
-import img22 from '../../assets/images/22.jpg';
-import img23 from '../../assets/images/23.jpg';
-import img31 from '../../assets/images/31.jpg';
-import img32 from '../../assets/images/32.jpg';
-import img33 from '../../assets/images/33.jpg';
 import "./PuzzleBoard.styles.css";
 import Circle from "../../assets/Circle";
 
@@ -19,7 +10,7 @@ interface Selected {
 const PuzzleBoard = () => {
   const selected = useRef<Selected | null>(null);
 
-  const imagePieces = [img11, img12, img13, img21, img22, img23, img31, img32, img33];
+  const imagePieces = Array.from({ length: 9 }, (_, i) => localStorage.getItem(`image_part_${Math.floor(i / 3)}_${i % 3}`) || '');
 
   const places = imagePieces.map((piece, index) => ({
     image: piece,
@@ -28,7 +19,7 @@ const PuzzleBoard = () => {
 
   const pieces = places.map((piece, index) => ({
     image: piece.image,
-    position: [Math.random() * 300, Math.random() * 300 + 300]
+    position: [Math.random() * 300, Math.random() * 250 + 300]
   }));
 
   const handleMouseDown = (event: MouseEvent<HTMLDivElement>, index: number) => {
@@ -38,8 +29,8 @@ const PuzzleBoard = () => {
   const handleMouseMove = (event: globalThis.MouseEvent) => {
     if (selected.current) {
       const { element, index } = selected.current;
-      const positionX = event.pageX - (element as HTMLDivElement).offsetWidth / 2;
-      const positionY = event.pageY - 96;
+      const positionX = event.pageX - (element as HTMLDivElement).offsetWidth / 2 - 16;
+      const positionY = event.pageY - 112;
       const targetX = places[index].position[0];
       const targetY = places[index].position[1];
       const differenceX = Math.abs(positionX - targetX);
@@ -115,7 +106,6 @@ const PuzzleBoard = () => {
       ))}
     </div>
   );
-  
 }
 
 export default PuzzleBoard;
